@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>presentation.js</title>
+    <style>
+     .hidden {
+         display: none !important;
+     }
+
+     .slide {
+         height: 100vh;
+         width: 100vw;
+
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+
+         background-position: center;
+         background-size: cover;
+     }
+
+     body {
+         margin: 0;
+         line-height: 1.6;
+         font-size: 18px;
+         font-family: sans;
+         color: #444;
+     }
+
+     h1 {
+         font-size: 2em;
+     }
+    </style>
+  </head>
+
+  <body>
+    <article class="slide">
+      <h1>presentation.js</h1>
+    </article>
+
+    <article class="slide">
+      <h2>slide title</h2>
+      <p>lorem ipsum dolor sit amet</p>
+    </article>
+
+    <article class="slide">
+      <h2>another slide title</h2>
+      <p>lorem ipsum dolor sit amet</p>
+    </article>
+
+    <script>
+     (function(){
+         "use strict";
+
+         let slides;
+
+         function show (node) {
+             node.classList.remove("hidden");
+         }
+
+         function hide (node) {
+             node.classList.add("hidden");
+         }
+
+         function backwards () {
+             let current, previous, i;
+
+             for (i = 0; slides[i].classList.contains("hidden"); i++) {}
+
+             if (i in slides && i-1 in slides) {
+                 current = slides[i];
+                 previous = slides[i-1];
+
+                 hide(current);
+                 show(previous);
+             }
+         }
+
+         function forwards () {
+             let current, next, i;
+
+             for (i = 0; slides[i].classList.contains("hidden"); i++) {}
+
+             if (i in slides && i+1 in slides) {
+                 current = slides[i];
+                 next = slides[i+1];
+
+                 hide(current);
+                 show(next);
+             }
+         }
+
+         function kbdhandler (e) {
+             switch (e.keyCode) {
+                 case 37:
+                     backwards();
+                     break;
+                 case 39:
+                     forwards();
+                     break;
+             }
+         }
+
+         function init () {
+             slides = document.getElementsByClassName("slide");
+
+             for (let i = 1; i < slides.length; ++i) {
+                 slides[i].classList.add("hidden");
+             }
+         }
+
+         window.addEventListener("keydown", kbdhandler);
+         init();
+     })();
+    </script>
+  </body>
+</html>
